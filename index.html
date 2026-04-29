@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varun Changappa — Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=Cormorant+Garamond:ital,wght@1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════ */
+:root {
+  /* Backgrounds */
+  --bg:   #0B0A08;
+  --s1:   #131210;   /* card surface */
+  --s2:   #1B1917;   /* elevated */
+  --s3:   #242220;   /* most elevated */
+
+  /* Borders */
+  --br:   rgba(255,255,255,0.06);
+  --br2:  rgba(255,255,255,0.12);
+
+  /* Text — every level is clearly readable */
+  --t1:   #F2EFEA;   /* headings, primary */
+  --t2:   #C8C3BC;   /* body copy */
+  --t3:   #7E7972;   /* labels, meta */
+  --t4:   #4A4643;   /* disabled / very subtle */
+
+  /* Accent */
+  --gold:    oklch(0.72 0.13 58);
+  --gold-bg: oklch(0.72 0.13 58 / 0.10);
+
+  /* Typography */
+  --fd: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fs: 'Cormorant Garamond', Georgia, serif;
+  --fb: 'DM Sans', system-ui, sans-serif;
+
+  /* ── TYPE SCALE (every step clearly named) ── */
+  --sz-hero:  clamp(50px, 7.2vw, 94px);  /* Hero H1         */
+  --sz-h2:    clamp(36px, 4.8vw, 58px);  /* Section title   */
+  --sz-h3:    clamp(20px, 2.4vw, 30px);  /* Project title   */
+  --sz-lead:  clamp(16px, 1.5vw, 19px);  /* Sub-headline    */
+  --sz-body:  15.5px;                     /* Body copy       */
+  --sz-sm:    13.5px;                     /* Secondary body  */
+  --sz-xs:    11px;                       /* Labels / caps   */
+
+  /* Spacing rhythm */
+  --sec:  clamp(100px, 12vw, 152px); /* between sections  */
+  --gut:  clamp(20px, 5vw, 80px);    /* horizontal gutter */
+  --max:  1240px;
+}
+
+/* ═══════════════════════════════════════
+   RESET
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--t1);
+  font-family: var(--fb);
+  font-weight: 300;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+
+/* ═══════════════════════════════════════
+   LAYOUT UTILITIES
+═══════════════════════════════════════ */
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gut); }
+
+.eyebrow {
+  font-family: var(--fb);
+  font-size: var(--sz-xs);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--t3);
+  margin-bottom: 16px;
+}
+
+.sec-rule {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--br2) 20%, var(--br2) 80%, transparent);
+}
+
+/* ═══════════════════════════════════════
+   BUTTON SYSTEM
+═══════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--fb);
+  font-size: var(--sz-xs);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  white-space: nowrap;
+}
+/* Primary — high-contrast white pill */
+.btn-primary {
+  background: var(--t1);
+  color: var(--bg);
+  padding: 15px 32px;
+  border-radius: 100px;
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: var(--gold);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px oklch(0.72 0.13 58 / 0.32);
+}
+/* Outlined */
+.btn-outline {
+  background: transparent;
+  color: var(--t1);
+  padding: 14px 30px;
+  border-radius: 100px;
+  border: 1px solid var(--br2);
+}
+.btn-outline:hover { border-color: var(--t1); transform: translateY(-2px); }
+/* Ghost text */
+.btn-ghost {
+  background: transparent;
+  color: var(--t2);
+  padding: 0;
+  gap: 10px;
+  font-size: var(--sz-xs);
+}
+.btn-ghost .arr { transition: transform 0.2s; display: inline-block; }
+.btn-ghost:hover { color: var(--t1); }
+.btn-ghost:hover .arr { transform: translateX(5px); }
+/* Icon nav */
+.btn-icon {
+  background: var(--s2);
+  color: var(--t3);
+  width: 38px; height: 38px;
+  border-radius: 9px;
+  border: 1px solid var(--br);
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+.btn-icon:hover { color: var(--t1); border-color: var(--br2); }
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 64px;
+  padding: 0 var(--gut);
+  display: flex; align-items: center; justify-content: space-between;
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+nav.on { border-bottom-color: var(--br); }
+.nav-id { display: flex; align-items: center; gap: 11px; }
+.nav-ava {
+  width: 32px; height: 32px; border-radius: 50%;
+  overflow: hidden; border: 1.5px solid var(--br2); flex-shrink: 0;
+}
+.nav-ava img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.nav-n { font-family: var(--fd); font-size: 13.5px; font-weight: 600; line-height: 1.2; }
+.nav-s { font-size: 10.5px; color: var(--t3); font-weight: 300; }
+.nav-r { display: flex; align-items: center; gap: 9px; }
+.nav-links { display: flex; gap: 26px; list-style: none; margin-right: 18px; }
+.nav-links a { font-size: var(--sz-xs); font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t3); transition: color 0.2s; }
+.nav-links a:hover { color: var(--t1); }
+
+/* ═══════════════════════════════════════
+   HERO — simplified, breathable
+═══════════════════════════════════════ */
+#hero {
+  min-height: 100svh;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gut);
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  gap: 48px;
+  align-items: center;
+  padding-top: 64px; /* nav height */
+}
+.hero-left {
+  padding-top: clamp(64px, 9vw, 112px);
+  padding-bottom: clamp(64px, 9vw, 112px);
+}
+/* H1 — the single dominant element */
+.hero-h1 {
+  font-family: var(--fd);
+  font-size: var(--sz-hero);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  margin-bottom: 28px;
+  text-wrap: balance;
+}
+.hero-h1 em {
+  font-family: var(--fs);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  letter-spacing: -0.015em;
+}
+/* Sub — readable, not competing */
+.hero-sub {
+  font-size: var(--sz-lead);
+  font-weight: 300;
+  color: var(--t2);
+  line-height: 1.72;
+  max-width: 480px;
+  margin-bottom: 44px;
+}
+/* Single primary CTA — prominent */
+.hero-cta { margin-bottom: 56px; }
+/* Metrics — inline, light weight, not boxes */
+.hero-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+.hm-item {
+  padding: 20px 28px 20px 0;
+  border-right: 1px solid var(--br);
+  margin-right: 28px;
+}
+.hm-item:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+.hm-num {
+  font-family: var(--fd);
+  font-size: clamp(22px, 2.8vw, 30px);
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.hm-label {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--t3);
+  line-height: 1.4;
+}
+/* 3D photo card */
+.hero-right {
+  display: flex; align-items: center; justify-content: flex-end;
+  padding-top: clamp(64px, 9vw, 112px);
+  padding-bottom: clamp(64px, 9vw, 112px);
+  perspective: 1200px;
+}
+.card-3d {
+  position: relative;
+  width: 320px; height: 420px;
+  border-radius: 20px;
+  border: 1px solid var(--br2);
+  background: var(--s1);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  animation: cFadeIn 0.9s ease 0.3s both;
+  cursor: default;
+}
+@keyframes cFadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.card-3d::before {
+  content: '';
+  position: absolute; inset: -2px; border-radius: 22px; z-index: -1;
+  background: conic-gradient(from 180deg,oklch(0.72 0.13 58/0) 0deg,oklch(0.72 0.13 58/.5) 60deg,oklch(0.72 0.13 58/0) 120deg,oklch(0.5 0.10 220/.2) 240deg,oklch(0.72 0.13 58/0) 360deg);
+  animation: cglow 7s linear infinite;
+  filter: blur(10px);
+}
+@keyframes cglow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.card-shine {
+  position: absolute; inset: 0; border-radius: 20px; z-index: 10; pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, transparent 55%);
+}
+.card-photo { width: 100%; height: 330px; overflow: hidden; position: relative; background: var(--s2); }
+.card-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.card-photo-overlay {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 40%, transparent 40%, var(--s1) 100%),
+              linear-gradient(to bottom, transparent 52%, var(--s1) 100%);
+}
+.card-foot {
+  padding: 16px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--br);
+}
+.card-name { font-family: var(--fd); font-size: 13.5px; font-weight: 600; line-height: 1.2; }
+.card-role { font-size: 11px; color: var(--t3); font-weight: 300; }
+.card-badge {
+  background: var(--gold-bg); color: var(--gold);
+  font-size: 9.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 100px;
+  border: 1px solid oklch(0.72 0.13 58 / 0.2);
+}
+
+/* ═══════════════════════════════════════
+   WORK SECTION
+═══════════════════════════════════════ */
+#work {
+  padding: var(--sec) 0;
+  background: var(--s1);
+}
+.work-intro { margin-bottom: 80px; }
+.section-h2 {
+  font-family: var(--fd);
+  font-size: var(--sz-h2);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+}
+.section-h2 em { font-family: var(--fs); font-style: italic; font-weight: 300; color: var(--gold); }
+
+/* project block */
+.project {
+  padding: 72px 0;
+  border-top: 1px solid var(--br);
+}
+.project:last-child { border-bottom: 1px solid var(--br); }
+.proj-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+.proj-num { font-size: 11px; color: var(--t4); font-weight: 400; letter-spacing: 0.08em; }
+.proj-tag {
+  font-size: 9.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold); background: var(--gold-bg); padding: 4px 10px; border-radius: 100px;
+  border: 1px solid oklch(0.72 0.13 58 / 0.2);
+}
+.proj-h3 {
+  font-family: var(--fd);
+  font-size: var(--sz-h3);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  max-width: 560px;
+  margin-bottom: 52px;
+}
+.proj-grid {
+  display: grid;
+  grid-template-columns: 58fr 42fr;
+  gap: clamp(40px, 6vw, 88px);
+  align-items: start;
+}
+
+/* Narrative blocks */
+.nb { margin-bottom: 36px; }
+.nb:last-child { margin-bottom: 0; }
+.nb-lbl {
+  font-size: var(--sz-xs); font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--t3); margin-bottom: 10px;
+}
+.nb-body { font-size: var(--sz-body); font-weight: 300; color: var(--t2); line-height: 1.85; }
+.chg {
+  list-style: none; margin-top: 8px;
+}
+.chg li {
+  font-size: var(--sz-body); font-weight: 300; color: var(--t2);
+  padding: 9px 0; border-bottom: 1px solid var(--br);
+  display: flex; gap: 14px; align-items: baseline; line-height: 1.6;
+}
+.chg li::before { content: '—'; color: var(--t4); flex-shrink: 0; font-size: 10px; }
+.res-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--br); border-radius: 12px; overflow: hidden; margin-top: 10px;
+}
+.res-cell { background: var(--s2); padding: 18px 20px; }
+.res-n {
+  font-family: var(--fd); font-size: clamp(17px, 2vw, 23px);
+  font-weight: 700; color: var(--t1); display: block; margin-bottom: 3px;
+}
+.res-d { font-size: 11px; font-weight: 400; color: var(--t2); line-height: 1.4; }
+.takeaway {
+  font-family: var(--fs); font-size: clamp(15px, 1.7vw, 20px);
+  font-style: italic; font-weight: 300; color: var(--t1); line-height: 1.6;
+  padding-left: 18px; border-left: 2px solid var(--gold); margin-top: 8px;
+}
+
+/* Visual column */
+.vis-lbl {
+  font-size: var(--sz-xs); font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--t3); margin-bottom: 16px;
+}
+.vis-stack { display: flex; flex-direction: column; gap: 12px; }
+
+/* Visual card — elevated, contained */
+.vc {
+  border: 1px solid var(--br);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--s2);
+  transition: border-color 0.25s, transform 0.35s cubic-bezier(.25,.46,.45,.94), box-shadow 0.35s;
+  box-shadow: 0 2px 0 rgba(255,255,255,0.03) inset, 0 4px 20px rgba(0,0,0,0.25);
+}
+.vc:hover {
+  border-color: var(--br2);
+  transform: translateY(-4px);
+  box-shadow: 0 2px 0 rgba(255,255,255,0.04) inset, 0 20px 48px rgba(0,0,0,0.45);
+}
+.vc img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain; /* never overflow */
+  transition: transform 0.45s cubic-bezier(.25,.46,.45,.94);
+}
+.vc:hover img { transform: scale(1.02); }
+
+/* Placeholder */
+.ph {
+  position: relative; background: var(--s2);
+  border-radius: 0;
+}
+.ph svg { display: block; width: 100%; height: auto; }
+.ph-lbl {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 10px 14px;
+  font-family: monospace; font-size: 9.5px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--t3);
+  background: linear-gradient(0deg, var(--s2) 0%, transparent 100%);
+}
+
+/* Before/after */
+.ba-stack { display: flex; flex-direction: column; gap: 10px; }
+.ba-tag {
+  display: inline-block;
+  font-size: 9px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 4px 4px 0 0;
+}
+.ba-before { background: var(--s3); color: var(--t3); }
+.ba-after  { background: var(--gold); color: #000; }
+
+/* Analytics cards */
+.ac {
+  background: var(--s2);
+  border: 1px solid var(--br);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 2px 0 rgba(255,255,255,0.03) inset;
+}
+.ac-head {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 11px; font-weight: 600; color: var(--t3); letter-spacing: 0.04em;
+  text-transform: uppercase; margin-bottom: 14px;
+}
+.ac-dot { width: 7px; height: 7px; border-radius: 50%; background: #0A66C2; }
+.ac-big {
+  font-family: var(--fd); font-size: clamp(26px, 3.5vw, 38px);
+  font-weight: 800; color: var(--t1); line-height: 1; margin-bottom: 3px;
+}
+.ac-trend { font-size: 11.5px; color: #4CAF50; font-weight: 500; margin-bottom: 14px; }
+.ac-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--br); border-radius: 8px; overflow: hidden; }
+.ac-cell { background: var(--s3); padding: 11px 14px; }
+.ac-cn { font-family: var(--fd); font-size: 15px; font-weight: 700; color: var(--t1); }
+.ac-cl { font-size: 10px; color: var(--t3); margin-top: 1px; }
+.bars { display: flex; align-items: flex-end; gap: 3px; height: 48px; margin-top: 14px; }
+.bar { flex: 1; border-radius: 2px 2px 0 0; background: var(--gold); opacity: 0.3; }
+.bar.hi { opacity: 0.75; }
+
+/* QuickSight dashboard */
+.qs {
+  background: #0E1420;
+  border: 1px solid #1D2A3E;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.qs-h {
+  padding: 12px 16px;
+  border-bottom: 1px solid #1D2A3E;
+  display: flex; align-items: center; gap: 8px;
+}
+.qs-h-t { font-size: 11px; font-weight: 600; color: #7A9CC4; letter-spacing: 0.04em; }
+.qs-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #1D2A3E; }
+.qs-m { background: #0E1420; padding: 14px 16px; }
+.qs-mn { font-family: var(--fd); font-size: clamp(18px, 2.5vw, 26px); font-weight: 800; line-height: 1; margin-bottom: 3px; }
+.qs-ml { font-size: 10px; color: #4A6A8A; font-weight: 400; line-height: 1.3; }
+.qs-mt { font-size: 10px; font-weight: 500; margin-top: 3px; }
+.qs-chart { padding: 14px 16px 12px; }
+.qs-ct { font-size: 9.5px; color: #4A6A8A; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+.qs-bars { display: flex; align-items: flex-end; gap: 4px; height: 52px; }
+.qs-bar { flex: 1; border-radius: 2px 2px 0 0; }
+.qs-xlbls { display: flex; justify-content: space-between; margin-top: 4px; }
+.qs-xlbl { font-size: 8px; color: #2A4A6A; }
+
+/* ═══════════════════════════════════════
+   APPROACH PIPELINE
+═══════════════════════════════════════ */
+#approach {
+  padding: var(--sec) 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, oklch(0.72 0.13 58 / 0.05) 0%, transparent 70%);
+  border-top: var(--br) 1px solid;
+}
+.approach-top { text-align: center; max-width: 560px; margin: 0 auto 72px; }
+.approach-sub { font-size: var(--sz-lead); font-weight: 300; color: var(--t2); line-height: 1.75; margin-top: 18px; }
+
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+}
+/* connector line between steps */
+.pipeline::before {
+  content: '';
+  position: absolute;
+  top: 50px; left: calc(12.5% + 16px); right: calc(12.5% + 16px);
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-bg), var(--gold-bg) 100%);
+  border-top: 1px dashed oklch(0.72 0.13 58 / 0.25);
+  z-index: 0;
+}
+.pipe-step { position: relative; z-index: 1; padding: 0 12px; }
+.pipe-icon-wrap {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: var(--gold-bg); border: 1px solid oklch(0.72 0.13 58 / 0.22);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin: 0 auto 20px;
+  position: relative;
+  box-shadow: 0 0 0 6px var(--bg);
+}
+.pipe-card {
+  background: var(--s1);
+  border: 1px solid var(--br);
+  border-radius: 16px;
+  padding: 28px 22px;
+  text-align: center;
+  transition: border-color 0.25s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 0 rgba(255,255,255,0.03) inset;
+}
+.pipe-card:hover {
+  border-color: oklch(0.72 0.13 58 / 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 2px 0 rgba(255,255,255,0.04) inset, 0 16px 40px rgba(0,0,0,0.4);
+}
+.pipe-step-num {
+  font-size: var(--sz-xs); font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--t3); margin-bottom: 10px;
+}
+.pipe-title {
+  font-family: var(--fd); font-size: 16px; font-weight: 700;
+  color: var(--t1); margin-bottom: 10px;
+}
+.pipe-desc { font-size: var(--sz-sm); font-weight: 300; color: var(--t2); line-height: 1.65; }
+
+/* ═══════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════ */
+#testimonials {
+  padding: var(--sec) 0;
+  border-top: 1px solid var(--br);
+}
+.testi-h {
+  font-family: var(--fd);
+  font-size: var(--sz-h2);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+}
+.testi-h em { font-family: var(--fs); font-style: italic; font-weight: 300; color: var(--gold); }
+
+/* masonry-like grid */
+.testi-grid-top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 60px;
+}
+.testi-grid-bot {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 14px;
+  max-width: calc(66.6% + 7px);
+}
+.t-card {
+  background: var(--s1);
+  border: 1px solid var(--br);
+  border-radius: 18px;
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: border-color 0.25s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 0 rgba(255,255,255,0.03) inset;
+}
+.t-card:hover {
+  border-color: var(--br2);
+  transform: translateY(-4px);
+  box-shadow: 0 2px 0 rgba(255,255,255,0.04) inset, 0 20px 48px rgba(0,0,0,0.35);
+}
+.t-qm { font-family: var(--fs); font-size: 38px; font-style: italic; color: var(--gold); line-height: 1; opacity: 0.5; }
+.t-txt { font-size: var(--sz-sm); font-weight: 300; color: var(--t2); line-height: 1.82; flex: 1; }
+.t-txt strong { color: var(--t1); font-weight: 400; }
+.t-auth { display: flex; align-items: center; gap: 10px; padding-top: 14px; border-top: 1px solid var(--br); }
+.t-ava { width: 36px; height: 36px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 1.5px solid var(--br2); }
+.t-ava img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.t-auth-name { font-family: var(--fd); font-size: 12.5px; font-weight: 600; color: var(--t1); line-height: 1.2; }
+.t-auth-role { font-size: 10.5px; font-weight: 300; color: var(--t3); }
+
+/* ═══════════════════════════════════════
+   EXPERIENCE
+═══════════════════════════════════════ */
+#experience {
+  padding: var(--sec) 0;
+  border-top: 1px solid var(--br);
+  background: var(--s1);
+}
+.exp-rows { margin-top: 56px; }
+.exp-r {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 0 56px;
+  padding: 30px 0;
+  border-top: 1px solid var(--br);
+  align-items: start;
+}
+.exp-r:last-child { border-bottom: 1px solid var(--br); }
+.exp-period { font-size: var(--sz-xs); letter-spacing: 0.08em; color: var(--t4); margin-bottom: 3px; }
+.exp-co { font-family: var(--fd); font-size: 12.5px; font-weight: 500; color: var(--t3); }
+.exp-role { font-family: var(--fd); font-size: clamp(15px, 1.8vw, 19px); font-weight: 600; color: var(--t1); margin-bottom: 6px; }
+.exp-desc { font-size: var(--sz-sm); font-weight: 300; color: var(--t2); line-height: 1.75; }
+
+/* ═══════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════ */
+#about {
+  padding: var(--sec) 0;
+  border-top: 1px solid var(--br);
+}
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 88px; align-items: start; }
+.about-txt { font-size: var(--sz-body); font-weight: 300; color: var(--t2); line-height: 1.88; }
+.about-txt p { margin-bottom: 1.4em; }
+.about-txt p:last-child { margin-bottom: 0; }
+.about-stat { padding: 22px 0; border-top: 1px solid var(--br); }
+.about-stat:last-child { border-bottom: 1px solid var(--br); }
+.about-stat-l { font-size: var(--sz-xs); font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--t3); margin-bottom: 5px; }
+.about-stat-v { font-family: var(--fd); font-size: 14.5px; font-weight: 600; color: var(--t1); }
+
+/* ═══════════════════════════════════════
+   CONTACT — high-contrast, impactful
+═══════════════════════════════════════ */
+#contact {
+  padding: var(--sec) 0 clamp(80px, 10vw, 130px);
+  border-top: 1px solid var(--br);
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, oklch(0.72 0.13 58 / 0.06) 0%, transparent 70%);
+}
+.contact-h {
+  font-family: var(--fd);
+  font-size: clamp(44px, 6vw, 82px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.03;
+  margin-bottom: 24px;
+}
+.contact-h em { font-family: var(--fs); font-style: italic; font-weight: 300; color: var(--gold); }
+.contact-sub {
+  font-size: var(--sz-lead); font-weight: 300;
+  color: var(--t2); max-width: 460px; line-height: 1.72; margin-bottom: 44px;
+}
+.contact-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* ═══════════════════════════════════════
+   FOOTER — refined, personal
+═══════════════════════════════════════ */
+footer {
+  padding: 32px var(--gut);
+  border-top: 1px solid var(--br);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 14px;
+  max-width: var(--max); margin: 0 auto;
+}
+.ft-left { font-family: var(--fd); font-size: 13px; font-weight: 500; color: var(--t3); }
+.ft-right { font-size: 11px; font-weight: 300; color: var(--t4); letter-spacing: 0.06em; }
+
+/* ═══════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════ */
+.rv {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.72s cubic-bezier(.25,.46,.45,.94), transform 0.72s cubic-bezier(.25,.46,.45,.94);
+}
+.rv.in { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.18s; }
+.d3 { transition-delay: 0.30s; } .d4 { transition-delay: 0.44s; }
+
+/* Hero CSS animations — no JS dep */
+@keyframes hUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+.ha { animation: hUp 0.72s cubic-bezier(.25,.46,.45,.94) both; }
+.ha.a0{animation-delay:.10s} .ha.a1{animation-delay:.22s}
+.ha.a2{animation-delay:.36s} .ha.a3{animation-delay:.52s} .ha.a4{animation-delay:.68s}
+
+/* ═══════════════════════════════════════
+   GLOW BORDER — rotating conic gradient
+═══════════════════════════════════════ */
+@property --ga {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes glowSpin { to { --ga: 360deg; } }
+
+.gw {                           /* glow wrapper */
+  --ga: 0deg;
+  border-radius: 14px;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--ga),
+    oklch(0.72 0.13 58 / .9) 0deg,
+    oklch(0.72 0.13 58 / 0)  55deg,
+    transparent              100deg,
+    oklch(0.5 0.12 220 / .55) 195deg,
+    oklch(0.5 0.12 220 / 0)  255deg,
+    transparent              295deg,
+    oklch(0.72 0.13 58 / .9) 360deg
+  );
+  animation: glowSpin 5s linear infinite;
+  transition: transform .35s cubic-bezier(.25,.46,.45,.94), box-shadow .35s;
+}
+.gw:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(0,0,0,.5);
+}
+.gi {                           /* glow inner */
+  background: var(--s1);
+  border-radius: 12.5px;
+  overflow: hidden;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+}
+.gi img, .gi canvas {
+  display: block;
+  width: 100%; height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ═══════════════════════════════════════
+   BENTO GRIDS
+═══════════════════════════════════════ */
+.bento {
+  display: grid;
+  gap: 10px;
+}
+/* LinkedIn: carousel tall-left, post + analytics stacked right */
+.bento-li {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.bento-li .bc-carousel { grid-column: 1; grid-row: 1 / 3; }
+.bento-li .bc-post      { grid-column: 2; grid-row: 1; }
+.bento-li .bc-analytics { grid-column: 2; grid-row: 2; }
+
+/* Email: gl1 + nl2 top, dashboard full bottom */
+.bento-em {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+.bento-em .bc-gl1  { grid-column: 1; }
+.bento-em .bc-nl2  { grid-column: 2; }
+.bento-em .bc-dash { grid-column: 1 / 3; }
+
+/* Website: side-by-side */
+.bento-ws {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Bento cell label */
+.bc-label {
+  font-size: 9px; font-weight: 600; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--t3);
+  padding: 10px 14px 6px;
+  flex-shrink: 0;
+}
+.bc-label.gold { color: var(--gold); }
+
+/* PDF carousel controls */
+.pdf-carousel { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.pdf-carousel canvas { display: block; width: 100%; height: auto; }
+.pdf-nav {
+  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
+  border-radius: 100px; padding: 5px 12px;
+}
+.pdf-nav button {
+  background: none; border: none; color: var(--t2); cursor: pointer;
+  font-size: 14px; padding: 0 3px; line-height: 1;
+  transition: color .15s;
+}
+.pdf-nav button:hover { color: var(--t1); }
+.pdf-page-ind { font-size: 10px; color: var(--t3); min-width: 32px; text-align: center; }
+
+/* Analytics card inside gi */
+.gi .ac { border: none; border-radius: 0; background: transparent; flex: 1; overflow: auto; }
+.gi .qs { border: none; border-radius: 0; background: #0E1420; flex: 1; }
+.gi .qs-h { border-radius: 0; }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width: 960px) {
+  #hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-right { display: none; }
+  .hero-metrics { gap: 0 20px; }
+  .proj-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .testi-grid-top { grid-template-columns: 1fr; }
+  .testi-grid-bot { grid-template-columns: 1fr; max-width: 100%; }
+  .exp-r { grid-template-columns: 1fr; gap: 6px; }
+  .pipeline { grid-template-columns: 1fr 1fr; }
+  .pipeline::before { display: none; }
+  .nav-links { display: none; }
+}
+@media (max-width: 640px) {
+  .hm-item { padding: 14px 18px 14px 0; margin-right: 18px; }
+  .pipeline { grid-template-columns: 1fr; }
+  .res-grid { grid-template-columns: 1fr; }
+  .contact-btns { flex-direction: column; }
+  .hero-metrics { gap: 0 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <div class="nav-id">
+    <div class="nav-ava"><img src="uploads/Varun.png" alt="Varun"></div>
+    <div>
+      <div class="nav-n">Varun Changappa</div>
+      <div class="nav-s">Marketing Manager</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <div class="nav-r">
+    <a href="https://linkedin.com/in/varunchangappa" target="_blank" rel="noopener" class="btn-icon" title="LinkedIn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="#contact" class="btn btn-primary" style="padding:10px 20px;font-size:10px;">Get In Touch</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section>
+  <div id="hero">
+    <div class="hero-left">
+      <p class="ha a0" style="font-size:var(--sz-lead);font-weight:400;color:var(--t2);margin-bottom:16px;letter-spacing:-0.01em;">Hey, I'm Varun,</p>
+      <h1 class="hero-h1 ha a1">
+        I work on the parts of marketing that actually <em>move things</em>
+      </h1>
+      <p class="hero-sub ha a2">
+        Content, email, and website work usually exist in silos. I focus on making them work together — clearer, more useful, easier to act on.
+      </p>
+      <div class="hero-cta ha a3">
+        <a href="#work" class="btn btn-primary">View My Work <span class="arr">↓</span></a>
+      </div>
+      <div class="hero-metrics ha a4">
+        <div class="hm-item">
+          <div class="hm-num">72%</div>
+          <div class="hm-label">Peak email<br>open rate</div>
+        </div>
+        <div class="hm-item">
+          <div class="hm-num">40%</div>
+          <div class="hm-label">Conversion<br>uplift, paid</div>
+        </div>
+        <div class="hm-item">
+          <div class="hm-num">10×</div>
+          <div class="hm-label">Press release<br>views vs benchmark</div>
+        </div>
+        <div class="hm-item">
+          <div class="hm-num">29%</div>
+          <div class="hm-label">Revenue<br>contribution</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="card-3d" id="card3d">
+        <div class="card-shine"></div>
+        <div class="card-photo">
+          <img src="uploads/Varun.png" alt="Varun Changappa">
+          <div class="card-photo-overlay"></div>
+        </div>
+        <div class="card-foot">
+          <div>
+            <div class="card-name">Varun Changappa</div>
+            <div class="card-role">B2B Marketing · Dublin</div>
+          </div>
+          <span class="card-badge">Open to work</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WORK ── -->
+<section id="work">
+  <div class="wrap">
+    <div class="work-intro rv">
+      <p class="eyebrow">Selected Work</p>
+      <h2 class="section-h2">Three projects,<br><em>one thread</em></h2>
+    </div>
+
+    <!-- PROJECT 1: LinkedIn -->
+    <article class="project" id="p1">
+      <div class="proj-meta rv"><span class="proj-num">01</span><span class="proj-tag">LinkedIn</span></div>
+      <h3 class="proj-h3 rv">Making LinkedIn content<br>more discoverable</h3>
+      <div class="proj-grid">
+        <div>
+          <div class="nb rv">
+            <p class="nb-lbl">Context</p>
+            <p class="nb-body">Worked on organic content for a B2B edtech product. Posts were being published consistently, but visibility wasn't stable.</p>
+          </div>
+          <div class="nb rv">
+            <p class="nb-lbl">What I noticed</p>
+            <p class="nb-body">The content looked fine individually, but didn't always connect to specific user problems or search intent.</p>
+          </div>
+          <div class="nb rv">
+            <p class="nb-lbl">What I changed</p>
+            <ul class="chg">
+              <li>Shifted content towards problem-led ideas</li>
+              <li>Focused heavily on hooks (first 1–2 lines)</li>
+              <li>Simplified language across all posts</li>
+              <li>Improved consistency over experimentation</li>
+            </ul>
+          </div>
+          <div class="nb rv">
+            <p class="nb-lbl">Results</p>
+            <div class="res-grid">
+              <div class="res-cell"><span class="res-n">65K+</span><span class="res-d">Monthly LinkedIn search appearances</span></div>
+              <div class="res-cell"><span class="res-n">7.5→8.6%</span><span class="res-d">CTR improvement</span></div>
+            </div>
+          </div>
+          <div class="nb rv">
+            <p class="nb-lbl">Takeaway</p>
+            <p class="takeaway">People don't engage because content is polished. They engage because it feels relevant.</p>
+          </div>
+        </div>
+        <div class="rv d1">
+          <p class="vis-lbl">LinkedIn content samples</p>
+          <div class="bento bento-li">
+            <!-- Carousel PDF -->
+            <div class="gw bc-carousel">
+              <div class="gi">
+                <div class="bc-label gold">Carousel · 10 slides</div>
+                <div class="pdf-carousel" id="carousel-wrap">
+                  <canvas id="carousel-canvas"></canvas>
+                  <div class="pdf-nav">
+                    <button id="carousel-prev" aria-label="Previous">‹</button>
+                    <span class="pdf-page-ind" id="carousel-ind">1 / ?</span>
+                    <button id="carousel-next" aria-label="Next">›</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Single post image -->
+            <div class="gw bc-post">
+              <div class="gi">
+                <div class="bc-label">Single post</div>
+                <img src="uploads/lms-post.png" alt="LinkedIn post — LMS content" style="object-fit:cover;flex:1;min-height:0">
+              </div>
+            </div>
+            <!-- Analytics -->
+            <div class="gw bc-analytics" style="--ga:90deg">
+              <div class="gi">
+                <div class="ac" style="border:none;border-radius:0;background:transparent;flex:1;overflow:auto;padding:16px">
+                  <div class="ac-head"><span class="ac-dot"></span>LinkedIn Analytics</div>
+                  <div class="ac-big">65,847</div>
+                  <div style="font-size:10px;color:var(--t3);margin-bottom:4px">Search appearances · last 90 days</div>
+                  <div class="ac-trend">↑ +34% vs previous period</div>
+                  <div class="ac-row">
+                    <div class="ac-cell"><div class="ac-cn">8.6%</div><div class="ac-cl">CTR</div></div>
+                    <div class="ac-cell"><div class="ac-cn">4,218</div><div class="ac-cl">Profile views</div></div>
+                  </div>
+                  <div class="bars" style="margin-top:12px">
+                    <div class="bar" style="height:36%"></div><div class="bar" style="height:43%"></div>
+                    <div class="bar" style="height:39%"></div><div class="bar" style="height:56%"></div>
+                    <div class="bar" style="height:61%"></div><div class="bar" style="height:49%"></div>
+                    <div class="bar hi" style="height:74%"></div><div class="bar hi" style="height:82%"></div>
+                    <div class="bar hi" style="height:90%"></div><div class="bar hi" style="height:96%"></div>
+                    <div class="bar hi" style="height:79%"></div><div class="bar hi" style="height:100%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 2: Email -->
+    <article class="project" id="p2">
+      <div class="proj-meta rv"><span class="proj-num">02</span><span class="proj-tag">Email</span></div>
+      <h3 class="proj-h3 rv">Making emails easier<br>to read and act on</h3>
+      <div class="proj-grid">
+        <div>
+          <div class="nb rv"><p class="nb-lbl">Context</p><p class="nb-body">Worked on announcement emails and newsletters for an 85,000+ user database.</p></div>
+          <div class="nb rv"><p class="nb-lbl">What I noticed</p><p class="nb-body">Emails were trying to do too much. Users had to work to understand the message and next step.</p></div>
+          <div class="nb rv">
+            <p class="nb-lbl">What I changed</p>
+            <ul class="chg">
+              <li>Focused each email on one core message</li>
+              <li>Improved structure for scanning</li>
+              <li>Made CTAs more direct and prominent</li>
+              <li>Reduced unnecessary copy throughout</li>
+            </ul>
+          </div>
+          <div class="nb rv">
+            <p class="nb-lbl">Results</p>
+            <div class="res-grid">
+              <div class="res-cell"><span class="res-n">72%</span><span class="res-d">Peak open rate</span></div>
+              <div class="res-cell"><span class="res-n">34%</span><span class="res-d">Average across 85K+ database</span></div>
+            </div>
+          </div>
+          <div class="nb rv"><p class="nb-lbl">Takeaway</p><p class="takeaway">In email, clarity is the product.</p></div>
+        </div>
+        <div class="rv d1">
+          <p class="vis-lbl">Email campaign performance</p>
+          <div class="bento bento-em">
+            <!-- GL1 — announcement email -->
+            <div class="gw bc-gl1">
+              <div class="gi">
+                <div class="bc-label gold">Announcement email</div>
+                <div class="pdf-carousel" id="gl1-wrap" style="flex:1;min-height:120px">
+                  <canvas id="gl1-canvas" style="width:100%;height:auto"></canvas>
+                </div>
+              </div>
+            </div>
+            <!-- NL2 — newsletter -->
+            <div class="gw bc-nl2" style="--ga:180deg">
+              <div class="gi">
+                <div class="bc-label gold">Newsletter</div>
+                <div class="pdf-carousel" id="nl2-wrap" style="flex:1;min-height:120px">
+                  <canvas id="nl2-canvas" style="width:100%;height:auto"></canvas>
+                </div>
+              </div>
+            </div>
+            <!-- QuickSight dashboard -->
+            <div class="gw bc-dash" style="--ga:270deg">
+              <div class="gi">
+                <div class="qs" style="border:none;border-radius:0;background:#0E1420;flex:1">
+                  <div class="qs-h" style="border-radius:0">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="4" fill="#1A3050"/><path d="M4 14l3-4 3 2 3-5 3 3" stroke="#4A9EDB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="qs-h-t">Email Performance Dashboard</span>
+                    <span style="margin-left:auto;font-size:8px;color:#2A4A6A">Jan – Mar 2025</span>
+                  </div>
+                  <div class="qs-metrics">
+                    <div class="qs-m"><div class="qs-mn" style="color:#4A9EDB">72%</div><div class="qs-ml">Peak Open Rate</div><div class="qs-mt" style="color:#4CAF50">↑ Best campaign</div></div>
+                    <div class="qs-m"><div class="qs-mn" style="color:#5AC9C9">34%</div><div class="qs-ml">Avg Open Rate</div><div class="qs-mt" style="color:#4CAF50">↑ vs 21% industry</div></div>
+                    <div class="qs-m"><div class="qs-mn" style="color:#A8DADC">85K+</div><div class="qs-ml">Database</div><div class="qs-mt" style="color:#888">Active contacts</div></div>
+                    <div class="qs-m"><div class="qs-mn" style="color:#7EC8E3">42%</div><div class="qs-ml">Click-to-Open</div><div class="qs-mt" style="color:#4CAF50">↑ High engagement</div></div>
+                  </div>
+                  <div class="qs-chart">
+                    <div class="qs-ct">Monthly open rate trend</div>
+                    <div class="qs-bars">
+                      <div class="qs-bar" style="height:44%;background:#1A3050"></div>
+                      <div class="qs-bar" style="height:50%;background:#1E3A60"></div>
+                      <div class="qs-bar" style="height:38%;background:#183050"></div>
+                      <div class="qs-bar" style="height:55%;background:#1E4270"></div>
+                      <div class="qs-bar" style="height:47%;background:#1E3A60"></div>
+                      <div class="qs-bar" style="height:60%;background:#254E88"></div>
+                      <div class="qs-bar" style="height:68%;background:#2C64A0"></div>
+                      <div class="qs-bar" style="height:72%;background:#3A8AC8"></div>
+                      <div class="qs-bar" style="height:55%;background:#254E88"></div>
+                      <div class="qs-bar" style="height:63%;background:#3070B0"></div>
+                      <div class="qs-bar" style="height:58%;background:#254E88"></div>
+                      <div class="qs-bar" style="height:48%;background:#1E3A60"></div>
+                    </div>
+                    <div class="qs-xlbls"><span class="qs-xlbl">Jan</span><span class="qs-xlbl">Feb</span><span class="qs-xlbl">Mar</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 3: Website -->
+    <article class="project" id="p3">
+      <div class="proj-meta rv"><span class="proj-num">03</span><span class="proj-tag">Website</span></div>
+      <h3 class="proj-h3 rv">Improving how a landing page<br>communicates value</h3>
+      <div class="proj-grid">
+        <div>
+          <div class="nb rv"><p class="nb-lbl">Context</p><p class="nb-body">Worked on a landing page for a free LMS product.</p></div>
+          <div class="nb rv">
+            <p class="nb-lbl">What I noticed (before)</p>
+            <ul class="chg">
+              <li>Messaging was feature-heavy</li>
+              <li>Structure didn't guide attention clearly</li>
+              <li>Users had to work to understand value</li>
+            </ul>
+          </div>
+          <div class="nb rv">
+            <p class="nb-lbl">What I changed</p>
+            <ul class="chg">
+              <li>Rewrote headlines to focus on outcomes</li>
+              <li>Improved layout and spacing throughout</li>
+              <li>Structured flow: value → proof → action</li>
+              <li>Simplified overall content hierarchy</li>
+            </ul>
+          </div>
+          <div class="nb rv">
+            <p class="nb-lbl">Results</p>
+            <div class="res-grid">
+              <div class="res-cell"><span class="res-n">40%</span><span class="res-d">Conversion uplift on paid campaigns</span></div>
+              <div class="res-cell"><span class="res-n">↑</span><span class="res-d">Stronger content-intent alignment</span></div>
+            </div>
+          </div>
+          <div class="nb rv"><p class="nb-lbl">Takeaway</p><p class="takeaway">Most pages don't need more content. They need better structure.</p></div>
+        </div>
+        <div class="rv d1">
+          <p class="vis-lbl">Before / After comparison</p>
+          <div class="bento bento-ws">
+            <div class="gw">
+              <div class="gi">
+                <div class="bc-label">Before</div>
+                <img src="uploads/Microsite - Before.png" alt="Before" style="object-fit:contain;flex:1;min-height:0;max-height:480px">
+              </div>
+            </div>
+            <div class="gw" style="--ga:180deg">
+              <div class="gi">
+                <div class="bc-label gold">After</div>
+                <img src="uploads/Microsite -After.png" alt="After" style="object-fit:contain;flex:1;min-height:0;max-height:480px">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── APPROACH ── -->
+<section id="approach">
+  <div class="wrap">
+    <div class="approach-top rv">
+      <p class="eyebrow" style="text-align:center">Approach</p>
+      <h2 class="section-h2" style="text-align:center">I don't think in channels.<br><em>I think in flow.</em></h2>
+      <p class="approach-sub">Most of the time the issue isn't missing output — it's broken connection between pieces. Here's how I work through it.</p>
+    </div>
+    <div class="pipeline rv d1">
+      <div class="pipe-step">
+        <div class="pipe-icon-wrap">🔍</div>
+        <div class="pipe-card">
+          <div class="pipe-step-num">Step 01</div>
+          <div class="pipe-title">Audit</div>
+          <div class="pipe-desc">Identify where the flow breaks — content, email, or page. Find what's unclear before anything else.</div>
+        </div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon-wrap">✂️</div>
+        <div class="pipe-card">
+          <div class="pipe-step-num">Step 02</div>
+          <div class="pipe-title">Simplify</div>
+          <div class="pipe-desc">Remove noise first. Reduce before adding. Every piece should earn its place in the story.</div>
+        </div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon-wrap">🔗</div>
+        <div class="pipe-card">
+          <div class="pipe-step-num">Step 03</div>
+          <div class="pipe-title">Connect</div>
+          <div class="pipe-desc">Link content, email and pages into one coherent narrative. Make the hand-offs work.</div>
+        </div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon-wrap">⚡</div>
+        <div class="pipe-card">
+          <div class="pipe-step-num">Step 04</div>
+          <div class="pipe-title">Activate</div>
+          <div class="pipe-desc">Less friction, more momentum. The goal isn't more activity — it's better results.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section id="testimonials">
+  <div class="wrap">
+    <div class="rv"><p class="eyebrow">What people say</p><h2 class="testi-h">Trusted by peers<br>& <em>mentors.</em></h2></div>
+    <div class="testi-grid-top">
+      <div class="t-card rv">
+        <div class="t-qm">"</div>
+        <p class="t-txt">Varun brings a thoughtful and strategic approach to marketing with a strong focus on results. He balances <strong>big-picture thinking with execution</strong> and consistently looks for ways to improve performance.</p>
+        <div class="t-auth">
+          <div class="t-ava"><img src="uploads/Tatev.jpg" alt="Tatev Harutyunyan"></div>
+          <div><div class="t-auth-name">Tatev Harutyunyan</div><div class="t-auth-role">SEO Manager · Alison</div></div>
+        </div>
+      </div>
+      <div class="t-card rv d1">
+        <div class="t-qm">"</div>
+        <p class="t-txt">Varun shaped and strengthened our <strong>B2B marketing communication</strong> across newsletters, LinkedIn, and campaigns. He kept messaging clear, relevant, and aligned with business needs.</p>
+        <div class="t-auth">
+          <div class="t-ava"><img src="uploads/Rabia.jpg" alt="Rabia Sahibzada"></div>
+          <div><div class="t-auth-name">Rabia Sahibzada</div><div class="t-auth-role">Senior Product Manager · Alison</div></div>
+        </div>
+      </div>
+      <div class="t-card rv d2">
+        <div class="t-qm">"</div>
+        <p class="t-txt">Varun <strong>connects product positioning, campaigns, and content</strong> into one coherent story. He is organised, dependable, and brings clarity across teams.</p>
+        <div class="t-auth">
+          <div class="t-ava"><img src="uploads/Pablo.jpg" alt="Pablo D'Costa"></div>
+          <div><div class="t-auth-name">Pablo D'Costa</div><div class="t-auth-role">Brand and Creative · Alison</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-grid-bot">
+      <div class="t-card rv">
+        <div class="t-qm">"</div>
+        <p class="t-txt">He combines creativity with structured execution, <strong>contributing meaningfully to B2B marketing growth</strong> while maintaining strong professionalism and consistency.</p>
+        <div class="t-auth">
+          <div class="t-ava"><img src="uploads/Deeksha.jpg" alt="Deeksha Honnawar"></div>
+          <div><div class="t-auth-name">Deeksha Honnawar</div><div class="t-auth-role">Brand Designer · Alison</div></div>
+        </div>
+      </div>
+      <div class="t-card rv d1">
+        <div class="t-qm">"</div>
+        <p class="t-txt">Varun translates audience insight into effective communication across <strong>campaigns, email workflows, and content</strong>. Reliable, clear, and easy to work with.</p>
+        <div class="t-auth">
+          <div class="t-ava"><img src="uploads/Aashir.jpg" alt="Aashir Rayyan Khan"></div>
+          <div><div class="t-auth-name">Aashir Rayyan Khan</div><div class="t-auth-role">Revenue Operations · Alison</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience">
+  <div class="wrap">
+    <div class="rv"><p class="eyebrow">Experience</p><h2 class="section-h2">Where I've <em>worked</em></h2></div>
+    <div class="exp-rows">
+      <div class="exp-r rv">
+        <div><p class="exp-period">2025 – Present</p><p class="exp-co">Alison, Dublin</p></div>
+        <div><p class="exp-role">B2B Marketing Manager</p><p class="exp-desc">Worked across campaigns, email, and content. Contributed to 29% revenue growth. Managed 85K+ database. Built campaign systems that improved consistency and performance.</p></div>
+      </div>
+      <div class="exp-r rv">
+        <div><p class="exp-period">2024</p><p class="exp-co">Greyhound Recycling</p></div>
+        <div><p class="exp-role">Sales Campaign Specialist</p><p class="exp-desc">Managed €10K/month paid media campaigns. Generated B2B leads. Website + SEO work.</p></div>
+      </div>
+      <div class="exp-r rv">
+        <div><p class="exp-period">2021 – 2022</p><p class="exp-co">Teamsuccesso</p></div>
+        <div><p class="exp-role">Digital Marketing Executive</p><p class="exp-desc">Paid media + SEO across enterprise clients including BMW & MINI.</p></div>
+      </div>
+      <div class="exp-r rv">
+        <div><p class="exp-period">2019 – 2020</p><p class="exp-co">KIA Motors</p></div>
+        <div><p class="exp-role">Sales & Marketing Executive</p><p class="exp-desc"></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div>
+        <p class="eyebrow rv">About</p>
+        <h2 class="section-h2 rv d1" style="margin-bottom:32px">A bit about <em>me</em></h2>
+        <div class="about-txt rv d2">
+          <p>Born in India, now living in Ireland — two cultures that take their sport very seriously.</p>
+          <p>I ended up in marketing because it's one of the few places where storytelling and strategy actually meet.</p>
+          <p>Over time, I've worked across content, campaigns, email, and websites. What interests me most now is how these pieces connect.</p>
+          <p>Outside of work: gym, sport, and the ongoing belief that planning a trip is basically the same as taking one.</p>
+        </div>
+      </div>
+      <div class="rv d2">
+        <div class="about-stat"><p class="about-stat-l">Based in</p><p class="about-stat-v">Dublin, Ireland</p></div>
+        <div class="about-stat"><p class="about-stat-l">Specialisms</p><p class="about-stat-v">Content · Email · Campaigns · Web</p></div>
+        <div class="about-stat"><p class="about-stat-l">Currently</p><p class="about-stat-v">B2B Marketing Manager at Alison</p></div>
+        <div class="about-stat"><p class="about-stat-l">Open to</p><p class="about-stat-v">New conversations</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="wrap">
+    <h2 class="contact-h rv">Let's <em>talk.</em></h2>
+    <p class="contact-sub rv d1">If you're looking for someone who can step into content, campaigns, or demand generation and start making things clearer and more effective — reach out.</p>
+    <div class="contact-btns rv d2">
+      <a href="mailto:varun@example.com" class="btn btn-primary">Email me</a>
+      <a href="https://linkedin.com/in/varunchangappa" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="ft-left">Varun Changappa</span>
+  <span class="ft-right">Marketing · Dublin · 2025</span>
+</footer>
+
+<script>
+// Nav scroll state
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('on', scrollY > 40), {passive: true});
+
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.09, rootMargin: '0px 0px -24px 0px' });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+// 3D card tilt
+const c3 = document.getElementById('card3d');
+if (c3) {
+  const par = c3.closest('.hero-right');
+  par.addEventListener('mousemove', e => {
+    const r = c3.getBoundingClientRect();
+    const rx = ((e.clientY - r.top - r.height/2) / (r.height/2)) * -10;
+    const ry = ((e.clientX - r.left - r.width/2) / (r.width/2)) * 10;
+    c3.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(10px)`;
+  });
+  par.addEventListener('mouseleave', () => {
+    c3.style.transition = 'transform .6s cubic-bezier(.25,.46,.45,.94)';
+    c3.style.transform = 'perspective(1200px) rotateX(0) rotateY(0) translateZ(0)';
+    setTimeout(() => c3.style.transition = '', 600);
+  });
+}
+</script>
+</body>
+</html>
